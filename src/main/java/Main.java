@@ -33,11 +33,8 @@ public class Main {
         }
 
         // Пользователь ввел корректное количество. Приступаем к расчетам
-
-
-
-
-
+        Counter counter = new Counter(countPerson);
+        counter.askUser();
 
     }
 
