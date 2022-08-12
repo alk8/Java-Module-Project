@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+
 
 public class Counter {
 
-    private int countPerson = 0;
-    private HashMap<String, Double> goods = new HashMap<String, Double>();
+    private final int countPerson;
+    private final HashMap<String, Double> goods = new HashMap<>();
 
     Counter(int countPerson) {
         this.countPerson = countPerson;
@@ -13,7 +13,7 @@ public class Counter {
 
     public void askUser() {
 
-        final String regex = "'.*?' [0-9]{2}.[0-9]{2}";
+        final String regex = "'.*?' \\d+.\\d{2}";
 
         Scanner sc = new Scanner(System.in);
 
@@ -21,28 +21,27 @@ public class Counter {
 
         // Получение ввода, парсинг
         String input = sc.nextLine();
-
+        // Валидность ввода
         if (input.matches(regex)) {
 
             String[] inputArray = input.split(" ");
 
-            // Попытка добавления товара
-            if (addGoods(inputArray)) {
+            // добавляем продукт
+            goods.put(inputArray[0], Double.parseDouble(inputArray[1]));
 
-                // Спросить о продолжении сессии
-                if (endSession(sc)) {
-                    System.out.println("Сессия закончена. Спасибо!");
-                    return;
-                }
-
-                // Снова спрашиваем про товар (Рекурсия)
-                askUser();
-
+            // Спросить о продолжении сессии
+            if (endSession(sc)) {
+                System.out.println("Сессия закончена. Спасибо!");
+                return;
             }
 
-        }else {
+            // Снова спрашиваем про товар (Рекурсия)
+            askUser();
+
+        } else {
             // Не соответсвует маске
             System.out.println("Введенный текст не соответсвует маске.");
+            // И опять спрашиваем (Рекурсия)
             askUser();
         }
 
@@ -50,18 +49,49 @@ public class Counter {
 
     private boolean endSession(Scanner sc) {
 
-        return sc.next().toUpperCase() == "ЗАВЕРШИТЬ";
+        if (sc.next().equalsIgnoreCase("ЗАВЕРШИТЬ")){
+            // вывести результаты
+            System.out.println("Итоги расчета:");
+
+            goods.forEach((key,value)-> System.out.println("*** Товар - " + key + " | Стоимость " + value));
+
+            double total = goods.values().stream().mapToDouble(Double::doubleValue).sum();
+
+            System.out.println("Всего потрачено: " + total);
+
+            double fromOnePerson = total / countPerson;
+
+            System.out.println("С человека - " + fromOnePerson + " " + GetRubleAddition((int)fromOnePerson));
+
+            System.out.println("Спасибо за использование. И пока)))");
+
+            return true;
+
+        }
+
+        return false;
 
     }
 
-    private boolean addGoods(String[] input) {
+    private String GetRubleAddition(int num)
+    {
+        int preLastDigit = num % 100 / 10;
+        if (preLastDigit == 1)
+        {
+            return "рублей";
+        }
 
-        boolean success = true;
-
-        goods.put(input[0], new Double(input[0]));
-
-        return success;
-
+        switch (num % 10)
+        {
+            case 1:
+                return "рубль";
+            case 2:
+            case 3:
+            case 4:
+                return "рубля";
+            default:
+                return "рублей";
+        }
     }
 
 }
