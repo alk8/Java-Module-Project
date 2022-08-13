@@ -8,25 +8,34 @@ public class Main {
 
         System.out.println("Добрый день!");
         Scanner sc = new Scanner(System.in);
-
+   
+        
         while (true){
 
             System.out.println("Сколько вас?");
 
-            countPerson = sc.nextInt();
+            try {
 
-            if (countPerson == 1){
+                countPerson = sc.nextInt();
 
-                System.out.println("Для одного человека в приложении нет необходимости");
+                if (countPerson == 1) {
 
-            }else if (countPerson < 1){
+                    System.out.println("Для одного человека в приложении нет необходимости");
 
-                System.out.println("Ошибочное значение. Повторите ввод");
+                } else if (countPerson < 1) {
 
-            } else {
+                    System.out.println("Ошибочное значение. Повторите ввод");
 
-                break;
+                } else {
 
+                    break;
+
+                }
+
+            } catch (Exception e){
+
+                System.out.println("Введено неправильное значение повторите ввод");
+                
             }
 
 
