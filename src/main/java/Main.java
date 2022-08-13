@@ -8,8 +8,7 @@ public class Main {
 
         System.out.println("Добрый день!");
         Scanner sc = new Scanner(System.in);
-   
-        
+           
         while (true){
 
             System.out.println("Сколько вас?");
@@ -37,7 +36,6 @@ public class Main {
                 System.out.println("Введено неправильное значение повторите ввод");
                 
             }
-
 
         }
 
