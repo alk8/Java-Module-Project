@@ -4,18 +4,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int countPerson = 0;
+        final String regex = "\\d+";
+        int countPerson;
+        String input;
 
         System.out.println("Добрый день!");
         Scanner sc = new Scanner(System.in);
-           
-        while (true){
+
+        while (true) {
 
             System.out.println("Сколько вас?");
 
-            try {
+            input = sc.next();
 
-                countPerson = sc.nextInt();
+            if (input.matches(regex)) {
+
+                countPerson = Integer.parseInt(input);
 
                 if (countPerson == 1) {
 
@@ -31,10 +35,10 @@ public class Main {
 
                 }
 
-            } catch (Exception e){
+            } else {
 
                 System.out.println("Введено неправильное значение повторите ввод");
-                
+
             }
 
         }
